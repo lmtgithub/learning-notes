@@ -35,7 +35,7 @@ mybatis:
   </select>
 </mapper>
 ```
-### 第三步：创建dao层接口
+## 第三步：创建dao层接口
 > dao层接口应该与第二步的xml进行对应。上文中的namespace="com.me.catering.dao.TestDao"，说明该接口是TestDao.java，包:com.me.catering
 ```java
 @Repository
@@ -44,3 +44,15 @@ public interface TestDao {
     int checkLogin(@Param("loginName") String loginName, @Param("loginPwd") String loginPwd);
 }
 ```
+## 第四步：添加@MapperScan注解
+> 扫描包，将带有@Repository注解的类注册成Spring的bean
+```java
+@SpringBootApplication
+@MapperScan("com.me.catering.dao")
+public class CateringApplication {
+  public static void main(String[] args) {
+    SpringApplication.run(CateringApplication.class, args);
+  }
+}
+```
+至此大功告成，代码可以运行了。
