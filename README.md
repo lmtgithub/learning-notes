@@ -16,7 +16,7 @@
 
 # <span id="coding">编程</span>
 1. [leetcode](编程题/leetcode/catalog.md)
-2. [剑指offer](编程题/剑指offere/catalog.md)
+2. [剑指offer](编程题/剑指offer/catalog.md)
 
 # <span id="best-practice">最佳实践</span>
 1. [SpringBoot + MySQL + Mybatis项目配置](最佳实践/SpringBoot+MySQL+Mybatis项目配置.md)
