@@ -13,7 +13,8 @@ public ThreadPoolExecutor(
     RejectedExecutionHandler handler // 当任务无法执行时的处理器
 ) {...}
 ```
-**参数介绍**<br>
+**参数介绍**
+
 |参数名称|描述|
 |-|-|
 |corePoolSize|核心线程的数量|
@@ -22,7 +23,9 @@ public ThreadPoolExecutor(
 |unit|存活时间(keepAliveTime)的单位|
 |workQueue|存储待执行任务的任务队列。如果线程数达到核心线程数量，再有任务时需要将任务放到该队列中等待执行|
 |threadFactory|创建新线程时候使用的工厂，可以设置线程名称|
-|handler|饱和策略当任务无法执行时的处理器。处理器分为几种：<br>1. **CallerRunsPolicy**：只要线程池没关闭，就直接用调用者所在线程来运行任务<br>2. **AbortPolicy**：抛出RejectedExecutionException异常信息<br>3. **DiscardPolicy**：直接不执行该任务，什么也不做<br>4. **DiscardOldestPolicy**：把队列里待最久的那个任务扔了，然后再调用 execute()<br>实现RejectedExecutionHandler接口，自定义饱和策略。|
+|handler|饱和策略当任务无法执行时的处理器。处理器分为几种：<br>1. **CallerRunsPolicy**：只要线程池没关闭，就直接用调用者所在线程来运行任务<br>2. **AbortPolicy**：抛出RejectedExecutionException异常信息<br>3. **DiscardPolicy**：直接不执行该任务，什么也不做<br>4. **DiscardOldestPolicy**：把队列里待最久的那个任务扔了，然后再调用 execute()<br>5. 实现RejectedExecutionHandler接口，自定义饱和策略。|
+
+
 # 线程处理任务步骤
 线程处理任务的步骤主要是3步：
 1. 线程池中的线程数量小于核心线程的数量，来了任务之后就直接新建一个线程执行任务。
