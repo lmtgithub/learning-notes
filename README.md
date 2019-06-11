@@ -6,7 +6,7 @@
 |[Java](#java)|[MySQL](#mysql)|[单元测试](#unit-test)|[编程题](#coding)|[最佳实践](#best-practice)|[好文共享](#article-share)|[插件&工具](#plugin-tool)|
 
 # <span id="java">Java</span>
-[CountDownLatch介绍](java/CountDownLatch.md)
+[CountDownLatch介绍](java/CountDownLatch.md)<br>
 [Java线程池](java/java线程池.md)
 
 # <span id="mysql">MySQL</span>
