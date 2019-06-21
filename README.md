@@ -21,7 +21,7 @@
 2. [剑指offer](编程题/剑指offer/catalog.md)
 
 # <span id="best-practice">最佳实践</span>
-1. [SpringBoot + MySQL + Mybatis项目配置](最佳实践/SpringBoot+MySQL+Mybatis项目配置.md)
+1. [手把手创建第一个Spring Boot应用](最佳实践/手把手创建第一个SpringBoot应用.md)
 2. [如何优雅的使用切面和注解实现权限验证](最佳实践/如何优雅的使用切面和注解实现权限验证.md)
 
 # <span id="article-share">好文共享</span>
