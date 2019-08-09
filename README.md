@@ -1,9 +1,9 @@
 # learning-notes
 > 记录日常学习、工作遇到的问题
 
-|![java](pic/java.png)|![mysql](pic/db.png)|![unit-test](pic/ut.png)|![codig](pic/coding.png)|![best-practice](pic/practice.png)|![article](pic/article.png)|![tools](pic/tools.png)|
+|![java](pic/java.png)|![mysql](pic/db.png)|![unit-test](pic/ut.png)|![codig](pic/coding.png)|![best-practice](pic/practice.png)|![article](pic/article.png)|![tools](pic/tools.png)|![note](pic/note.png)
 |-|-|-|-|-|-|-|
-|[Java](#java)|[MySQL](#mysql)|[单元测试](#unit-test)|[编程题](#coding)|[最佳实践](#best-practice)|[好文共享](#article-share)|[插件&工具](#plugin-tool)|
+|[Java](#java)|[MySQL](#mysql)|[单元测试](#unit-test)|[编程题](#coding)|[最佳实践](#best-practice)|[好文共享](#article-share)|[插件&工具](#plugin-tool)|[读书笔记](#read-note)
 
 # <span id="java">Java</span>
 [CountDownLatch介绍](java/CountDownLatch.md)<br>
@@ -29,6 +29,9 @@
 
 # <span id="plugin-tool">插件&工具</span>
 [Lombok](plugin-tool/lombok/catalog.md)
+
+# <span id="read-note">读书笔记</span>
+[设计模式之禅](读书笔记/设计模式之禅/catalog.md)
 
 
 
