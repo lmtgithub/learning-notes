@@ -51,22 +51,38 @@ switch (status) {
 Student[] studentList = new Student[](....); 
 ```
 ## 2.3 做有意义的区分
+同一作用域内，对于2个相同的对象名称区分要有意义，不能简单的使用数字进行区分。
 ```java
-// 场景：会员合并。将会员1的信息合并到会员2
+// 场景：实例化2个Person对象。一个是男、一个女
 
-// bad case：即使看了代码也很快忘记到底是将谁转变成谁
-public Member memberMerge(Member m1, Member m2) {
-    m1.setPoints(m1.getPoints() + m2.getPoints());
-    m1.setName(m2.getName());
-    // 省略其他信息的合并
-    return m1;
-}
+// bad case
+Person p1 = new Person("female");
+Person p2 = new Person("male");
 
 // good case
-public Member memberMerge(Member target, Member source) {
-    target.setPoints(target.getPoints() + source.getPoints());
-    target.setName(source.getName());
-    // 省略其他信息的合并
-    return taret;
+Person famale = new Person("female");
+Person male = new Person("male");
+```
+## 2.4 使用读得出的名称
+拿书中的例子来讲，只看函数名`genymdhms`谁可以明确该函数的作用？
+```java
+String date = genymdhms(new Date());
+
+// 将日期转成yyyy-MM-dd的字符串格式
+public String genymdhms(Date date) {
+    Date currentTime = new Date();
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    String dateString = formatter.format(currentTime);
+    return dateString;
+}
+```
+其实该函数确实比较难命名，个人感觉还不如定义成这样
+```java
+// DateFormat：日期格式的枚举值
+public String dateToString(Date date, DateFormat dateFormat) {
+    Date currentTime = new Date();
+    SimpleDateFormat formatter = new SimpleDateFormat(dateFormat.getValue());
+    String dateString = formatter.format(currentTime);
+    return dateString;
 }
 ```
