@@ -32,7 +32,8 @@
 [Lombok](plugin-tool/lombok/catalog.md)
 
 # <span id="read-note">读书笔记</span>
-[设计模式之禅](读书笔记/设计模式之禅/catalog.md)
+[设计模式之禅](读书笔记/设计模式之禅/catalog.md)<br/>
+[代码整洁之道](读书笔记/代码整洁之道/clean-code.md)
 
 
 
