@@ -86,3 +86,16 @@ public String dateToString(Date date, DateFormat dateFormat) {
     return dateString;
 }
 ```
+## 2.5 类名
+类名和对象名应该是名词或名词短语，例如：Customer、Member等，不能使用动词。
+## 2.6 方法名
+方法名应该是动词或者动词短语，应该是个动宾结构。例如：deleteRecord、saveActivity等
+## 2.7 每个概念对应一个词
+相同的概念使用相同的词语，例如：获取单条对象使用getXXX()；获取多个对象使用listXXX()；
+```java
+// 根据学号获取学生对象
+public Student getStudent(String strNumber){}
+
+// 根据班级获取班级所有学生
+public List<Student> listStudent(){}
+```
