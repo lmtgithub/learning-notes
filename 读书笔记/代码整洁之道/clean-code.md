@@ -91,11 +91,143 @@ public String dateToString(Date date, DateFormat dateFormat) {
 ## 2.6 方法名
 方法名应该是动词或者动词短语，应该是个动宾结构。例如：deleteRecord、saveActivity等
 ## 2.7 每个概念对应一个词
-相同的概念使用相同的词语，例如：获取单条对象使用getXXX()；获取多个对象使用listXXX()；
+相同的概念使用相同的词语，例如：获取单条对象使用getXXX()；获取多个对象使用listXXX()；避免查询对象时混用getXXX(),fetchXXX(),obtainXXX()。
+
+给每个抽象概念选定一个词，并一以贯之，保持一致，就可以避免花费多余的浏览时间才能找到正确的方法。
 ```java
 // 根据学号获取学生对象
 public Student getStudent(String strNumber){}
 
 // 根据班级获取班级所有学生
 public List<Student> listStudent(){}
+```
+## 2.8 别用双关语
+避免将同一单词用到不同的概念。同一术语用于不同概念基本就属于双关语了。
+```java
+// 加法函数
+public int add(int a, int b){}
+
+// bad case。将目标值加入到list集合中,此处使用add就会和上面的函数混淆。
+public List<Integer> add(List<Integer> container, int target){};
+
+// good case。使用append或者insert都可以
+public List<Integer> append(List<Integer> container, int target){}
+```
+# 3. 函数
+## 3.1 短小
+函数缩进层级不要多余两层，这样更易阅读和理解。
+## 3.2 只做一件事
+函数应该只做一件事，做好这件事，只做这一件事。
+
+正如下面代码：
+
+优化前：需要阅读人自己区分canGetCoupon中做了哪几件事，最终通过阅读代码和注释才明白做了2件事：验证活动和验证用户信息。
+
+优化后：用函数分别处理验证活动和验证用户信息，人们可以很清楚的知道canGetCoupon一共做了2件事。
+```java
+// 优化前代码
+public boolean canGetCoupon(int userId, int activityId) {
+    // 第一步：校验活动是否有效
+    Activity activity = activityDao.queryById(activityId);
+    if(activity == null || activity.getStatus() != ActivityStatus.EFFECTIVE.value()) {
+        return false;
+    }
+
+    // 第二步：校验用户信息是否完整
+    UserInfo user = userDao.queryById(userId);
+    if (StringUtils.isBlank(user.getName())){
+        log.warn("未填写姓名");
+        return false;
+    }
+    if (StringUtils.isBlank(user.getPhone())) {
+        log.warn("未填写手机号");
+        return false;
+    }
+    return true;
+}
+
+// 优化后代码
+public boolean canGetCoupon(int userId, int activityId) {
+    return valideActivity(activityId) && valideUserInfo(userId);
+}
+
+private boolean valideActivity(int activityId) {
+    Activity activity = activityDao.queryById(activityId);
+    if(activity == null || activity.getStatus() != ActivityStatus.EFFECTIVE.value()) {
+        return false;
+    }
+    return true;
+}
+
+private boolean valideUserInfo(int userId) {
+    UserInfo user = userDao.queryById(userId);
+    if (StringUtils.isBlank(user.getName())){
+        log.warn("未填写姓名");
+        return false;
+    }
+    if (StringUtils.isBlank(user.getPhone())) {
+        log.warn("未填写手机号");
+        return false;
+    }
+    return true;
+}
+```
+## 3.3 使用描述性的名字
+函数越小，功能越集中，就越好起名字。并且命名方式应该保持一致。
+
+### 3.4 函数参数
+函数的参数不要超过3个，超过3个之后需要封装成类。
+
+### 3.5 无副作用
+通过下列校验用户名和密码的代码，来介绍副作用的危害。
+```java
+public boolean checkPassword(String username, String password) {
+    User user = userDao.getUserByName(username);
+    if (user == null) {
+        return false;
+    }
+    String expectedPwd = user.getPwd();
+    if (password.equals(expectedPwd)) {
+        Session.init();
+        return true;
+    }
+    return false;
+}
+```
+此处的副作用就是在`Session.init()`上，原本是校验密码的函数，结果写写入了Session。对于不懂内部实现的人来说很容易用出问题，会将原先的Session抹掉。如果函数命名成`checkPasswordAndInitSession(String username, String password)`会更好一些，但是却违背了“只做一件事儿”的原则，所以将这种操作分成2步比较好。第一步:`checkPassword()`;第二步:`Session.init()`
+
+## 3.6 抽离try-catch代码块
+try-catch代码块搞乱了代码接口，将错误处理与正常流程混为一谈，最好将try{}和catch{}的代码主体部分抽离出来，另外形成函数。
+```java
+public void insertUser(User user) {
+    try {
+        insert(user);
+    } catch (Exception ex) {
+        dealWithError(ex);
+    }
+}
+private void insert(User user) {
+    if (user == null) {
+        throw new Exception("插入对象为空");
+    }
+    userDao.insert(user);
+}
+
+private void dealWithError(Exception ex) {
+    log.error("插入失败", ex);
+    // do something else
+}
+```
+## 3.7 避免重复
+代码重复不仅使得代码更加冗长，而且后期维护也较为困难。面向对象编程、面向切面编程都可以减少一些重复代码。
+
+## 3.8 如何写好函数
+上面介绍了这么多函数的规则，但是如何写好函数呢？从一开始就遵循规则写代码函数，应该很少人会做到。做不到的话，就第一遍代码只要实现工能够即可，然后慢慢打磨代码，分解函数、修改名称、消除重复代码等操作。
+# 4. 注释
+尽可能不添加注释，使用代码自解释。即通过代码便可了解这段代码的功能。除非不得已使用注释，也要使注释变得简单。
+```java
+// 新增一名学生(此处的注释就显得额外多余)
+public void insertStudent(Student student) {
+    // do something
+}
 ```
